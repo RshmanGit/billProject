@@ -1,6 +1,7 @@
 from tastypie.resources import ModelResource
 from api.models import *
 from tastypie.authorization import Authorization
+from datetime import date
 
 class allOrders(ModelResource):
     class Meta:
@@ -22,4 +23,11 @@ class pendingOrder(ModelResource):
         temp = order.objects.filter(delivered = False)
         queryset = temp
         resource_name = 'pendOrder'
+
+class todayRawMat(ModelResource):
+    class Meta:
+        temp = rawMaterialOrder.objects.filter(order_date = date.today())
+        queryset = temp
+        resource_name = 'todayRawMat'
         
+    

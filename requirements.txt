@@ -1,2 +1,7 @@
-Django
-django-tastypie
+django                     
+django-tastypie      
+mysql-connector-python    
+mysql-python             
+mysqlclient           
+openssl                          
+wheel        
