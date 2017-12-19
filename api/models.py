@@ -11,10 +11,11 @@ class order(models.Model):
     quantity = models.IntegerField()
     order_date = models.DateField()
     delivery_date = models.DateField()
+    quant_delivered = models.IntegerField(default=0) #already delivered quantity
     delivered = models.BooleanField(default = False)
     
-    def __str__():
-        return '%s %s %d' % (self.name, self.village)
+    def __str__(self):
+        return '%s %s' % (self.name, self.village)
     
 class rawMaterialOrder(models.Model):
     
@@ -23,10 +24,8 @@ class rawMaterialOrder(models.Model):
     desc = models.CharField(max_length=200)
     weight = models.IntegerField()
     order_date = models.DateField()
-    delivery_date = models.DateField()
-    recieved = models.BooleanField(default = False)
     
-    def __str__():
+    def __str__(self):
         return '%d %s %s' % (self.gatePass, self.name, self.desc)
     
 class expenses(models.Model):
@@ -36,5 +35,5 @@ class expenses(models.Model):
     cashInHand = models.IntegerField()
     date = models.DateField()
     
-    def __str__():
+    def __str__(self):
         return '%s' % (self.desc)
