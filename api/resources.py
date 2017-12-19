@@ -30,4 +30,8 @@ class todayRawMat(ModelResource):
         queryset = temp
         resource_name = 'todayRawMat'
         
-    
+class todayExps(ModelResource):
+    class Meta:
+        temp = expenses.objects.filter(date = date.today())
+        queryset = temp
+        resource_name = 'todayExps'
