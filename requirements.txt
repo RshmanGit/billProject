@@ -4,4 +4,6 @@ mysql-connector-python
 mysql-python             
 mysqlclient           
 openssl                          
-wheel        
+wheel     
+requests  
+pymongo 
