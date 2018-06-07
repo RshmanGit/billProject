@@ -1,9 +1,1 @@
-django                     
-django-tastypie      
-mysql-connector-python    
-mysql-python             
-mysqlclient           
-openssl                          
-wheel     
-requests  
-pymongo 
+django  

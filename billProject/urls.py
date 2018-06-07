@@ -14,4 +14,5 @@ v1_api.register(todayExps())
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'api/', include(v1_api.urls)),
+    url(r'^',include('api.urls'))
 ]

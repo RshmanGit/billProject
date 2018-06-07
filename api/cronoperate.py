@@ -1,10 +1,9 @@
-from django_cron import CronJobBase, Schedule
+import time
 from api.models import *
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 from datetime import datetime
-import time
 
 #fetch all fetched=false entries and update them true
 def fetch_and_update_order(ref):
@@ -128,30 +127,22 @@ def post_all_pending_orders(ref):
         print(e)
         print("[-]Error occured")
 
-class MyCronJob(CronJobBase):
+def do():
+    print("[+]cron begins\n")
+    #firebase configurations
+    cred = credentials.Certificate("abhaychem-7159f-firebase-adminsdk-am6xd-384b8b166d.json")
+    firebase_admin.initialize_app(cred,{
+        'databaseURL' : 'https://abhaychem-7159f.firebaseio.com/'
+    })
+    order_ref = db.reference('Order Details')
 
-    #cron configurations
-    RUN_EVERY_MINS = 1 # every 2 mins
+    rawmat_ref = db.reference('Raw Details')
+    exp_ref = db.reference('Expenses Details')
 
-    schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
-    code = 'api.my_cron_job'    # a unique code
-    ALLOW_PARALLEL_RUNS = True
+    pend_ref = db.reference('Pending orders')
 
-    #cron job goes in the do() function
-    def do(self):
-        #firebase configurations
-        cred = credentials.Certificate("abhaychem-7159f-firebase-adminsdk-am6xd-384b8b166d.json")
-        firebase_admin.initialize_app(cred,{
-            'databaseURL' : 'https://abhaychem-7159f.firebaseio.com/'
-        })
-        order_ref = db.reference('Order Details')
-
-        rawmat_ref = db.reference('Raw Details')
-
-        exp_ref = db.reference('Expenses Details')
-
-        pend_ref = db.reference('Pending orders')
-
+    while(True):
+        time.sleep(300)
         print("[+]Cron started")
         try:
             print("[+]fetching orders")
