@@ -1,9 +1,10 @@
 import time
-from api.models import *
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import db
 from datetime import datetime
+
+import firebase_admin
+from firebase_admin import credentials, db
+
+from api.models import order, rawMaterialOrder, expenses
 
 #fetch all fetched=false entries and update them true
 def fetch_and_update_order(ref):
@@ -142,28 +143,28 @@ def do():
     pend_ref = db.reference('Pending orders')
 
     while(True):
-        time.sleep(300)
-        print("[+]Cron started")
+        print("[+]================Cron started================")
         try:
-            print("[+]fetching orders")
+            print("[+]--------------fetching orders--------------")
             fetch_and_update_order(order_ref)
-            print("[+]orders updated")
-            print("[+]fetching raw material")
+            print("[+]--------------orders updated--------------")
+            print("[+]--------------fetching raw material--------------")
             fetch_and_update_rawmat(rawmat_ref)
-            print("[+]raw materials updated")
-            print("[+]fetching expenses")
+            print("[+]--------------raw materials updated--------------")
+            print("[+]--------------fetching expenses--------------")
             fetch_and_update_expenses(exp_ref)
-            print("[+]expenses updated")
+            print("[+]--------------expenses updated--------------")
         except Exception as e:
-            print("[-]Error")
+            print("[-]Error in calling functions")
             print(e)
 
         try:
-            print("[+]Posting all pending orders")
+            print("[+]--------------Posting all pending orders--------------")
             post_all_pending_orders(pend_ref)
-            print("[+]Posted all pending orders")
+            print("[+]--------------Posted all pending orders--------------")
         except Exception as e:
             print(e)
             print("[-]Error occured while posting pending orders")
 
-        print("[+]Cron terminated")
+        print("[+]================Cron terminated================")
+        time.sleep(300)
